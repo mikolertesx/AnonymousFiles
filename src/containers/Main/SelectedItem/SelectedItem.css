@@ -1,0 +1,4 @@
+.selectedItem {
+  flex: 1 1 calc(100% - 312px);
+  background: #ddd;
+}

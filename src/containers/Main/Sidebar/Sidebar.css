@@ -1,0 +1,7 @@
+.sidebar {
+  flex: 0 0 312px;
+  height: 100vh;
+  border-right: 1px solid black;
+  background: white;
+  overflow-y: auto;
+}
