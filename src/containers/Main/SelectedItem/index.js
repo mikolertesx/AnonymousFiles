@@ -1,5 +1,6 @@
 import React from "react";
 import "./SelectedItem.css";
+import UploadItem from "./uploadItem";
 
 const SelectedItem = ({ itemIndex }) => {
   console.log('Index: ', itemIndex);
@@ -7,9 +8,7 @@ const SelectedItem = ({ itemIndex }) => {
   return (
     <div className="selectedItem">
       {itemIndex === null || itemIndex === undefined ? (
-        <div>
-          <p>Click an item on the sidebar to see it's contents.</p>
-        </div>
+        <UploadItem />
       ) : (
           <div>
             <p>Nothing to see.</p>
