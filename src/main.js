@@ -15,7 +15,6 @@ ipcMain.handle(file.choose, async (_event, args) => {
 
 ipcMain.handle(file.upload, async(_event, args) => {
   const {filePath} = args;
-  console.log(filePath);
   if (!filePath) {
     return;
   }
@@ -26,7 +25,6 @@ ipcMain.handle(file.upload, async(_event, args) => {
 
 ipcMain.handle(database.get, async(_event, _args) => {
   const data = await db.find().exec();
-  console.log(data);
   return data;
 });
 
@@ -42,7 +40,7 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
+  mainWindow.setMenu(null);
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };

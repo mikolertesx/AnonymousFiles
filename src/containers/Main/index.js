@@ -1,17 +1,20 @@
 import React from "react";
-import FileContext from "../../context/filesContext";
+import { FileContextProvider } from "../../context/filesContext";
+import { SelectedContextProvider } from "../../context/selectedContext";
 import Sidebar from "./Sidebar";
 import SelectedItem from "./SelectedItem";
 import "./Main.css";
 
 const Main = () => {
   return (
-    <FileContext>
-      <div className="main">
-        <Sidebar />
-        <SelectedItem />
-      </div>
-    </FileContext>
+    <FileContextProvider>
+      <SelectedContextProvider>
+        <div className="main">
+          <Sidebar />
+          <SelectedItem />
+        </div>
+      </SelectedContextProvider>
+    </FileContextProvider>
   );
 };
 

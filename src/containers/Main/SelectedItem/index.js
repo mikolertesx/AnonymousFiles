@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SelectedItem.css";
+import { SelectedContext } from "../../../context/selectedContext";
 import UploadItem from "./uploadItem";
+import UploadedItem from "./uploadedItem";
 
-const SelectedItem = ({ itemIndex }) => {
-  console.log('Index: ', itemIndex);
+const SelectedItem = () => {
+  const [selected, ] = useContext(SelectedContext);
 
   return (
     <div className="selectedItem">
-      {itemIndex === null || itemIndex === undefined ? (
+      {selected === null || selected === undefined ? (
         <UploadItem />
       ) : (
-          <div>
-            <p>Nothing to see.</p>
-            <p>{itemIndex}</p>
-          </div>
+        <UploadedItem id={selected} />
         )}
     </div>
   );

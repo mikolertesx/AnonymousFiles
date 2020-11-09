@@ -1,24 +1,24 @@
 import React, { useContext } from "react";
 import { SelectedContext } from "../../../../context/selectedContext";
-import "./SidebarItem.css";
+import "./SidebarAddItem.css";
 
-const SidebarItem = ({ id, description }) => {
+const SidebarAddItem = () => {
   const [selectedFile, setSelectedFile] = useContext(SelectedContext);
 
   const onSelectHandler = () => {
-    setSelectedFile(id);
+    setSelectedFile(null);
   };
 
   return (
     <div
       onClick={onSelectHandler}
-      className={`sidebar-item ${
-        selectedFile && selectedFile === id && "active"
+      className={`sidebar-item--add ${
+        selectedFile === null && "active"
       }`}
     >
-      <p>{description || "New Item..."}</p>
+      <p>+</p>
     </div>
   );
 };
 
-export default SidebarItem;
+export default SidebarAddItem;

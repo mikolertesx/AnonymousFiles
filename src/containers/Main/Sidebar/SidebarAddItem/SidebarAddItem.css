@@ -1,0 +1,24 @@
+.sidebar-item--add {
+  min-height: 46px;
+  border-bottom: 1px solid black;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transition: background 0.3s;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.sidebar-item--add.active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-item--add:hover {
+  background: #dddddd;
+}
+
+.sidebar-item--add:last-of-type {
+  border-bottom: none;
+}
