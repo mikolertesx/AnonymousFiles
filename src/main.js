@@ -1,25 +1,25 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
-const fs = require('fs');
-const upload = require('./util/upload').default;
+const path = require('path');
+const db = require('./db/database');
+const upload = require('./util/upload');
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-ipcMain.handle('upload-file', async (event, args) => {
+ipcMain.handle('upload-file', async (_event, args) => {
   const files = await dialog.showOpenDialog();
   return files.canceled ? null: files.filePaths;
 });
 
-ipcMain.handle('send-file', async(event, args) => {
+ipcMain.handle('send-file', async(_event, args) => {
   const {filePath} = args;
   console.log(filePath);
   if (!filePath) {
     return;
   }
   const result = await upload(filePath);
-  console.log(result);
+  await db.insert({ path: filePath, url: result.url, name: path.basename(filePath)});
   return result;
 });
 
@@ -55,6 +55,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

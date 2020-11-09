@@ -14,6 +14,7 @@ const UploadItem = () => {
 
   const uploadFileHandler = async () => {
     const message = await ipcRenderer.invoke("send-file", { filePath: file });
+    console.log(message);
   };
 
   return (

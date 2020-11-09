@@ -12,4 +12,4 @@ export const uploadFile = async (fileDir) => {
   return request.data;
 }
 
-export default uploadFile;
+module.exports = uploadFile;
