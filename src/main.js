@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const {db:database, file} = require('./shared/constants').default;
 const path = require('path');
 const db = require('./db/database');
 const upload = require('./util/upload');
@@ -7,20 +8,26 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-ipcMain.handle('upload-file', async (_event, args) => {
+ipcMain.handle(file.choose, async (_event, args) => {
   const files = await dialog.showOpenDialog();
   return files.canceled ? null: files.filePaths;
 });
 
-ipcMain.handle('send-file', async(_event, args) => {
+ipcMain.handle(file.upload, async(_event, args) => {
   const {filePath} = args;
   console.log(filePath);
   if (!filePath) {
     return;
   }
   const result = await upload(filePath);
-  await db.insert({ path: filePath, url: result.url, name: path.basename(filePath)});
-  return result;
+  const dbResult = await db.insert({ path: filePath, url: result.url, name: path.basename(filePath)});
+  return dbResult;
+});
+
+ipcMain.handle(database.get, async(_event, _args) => {
+  const data = await db.find().exec();
+  console.log(data);
+  return data;
 });
 
 const createWindow = () => {

@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext, useEffect } from "react";
+import { FileContext } from "../../../context/filesContext";
 import SidebarItem from "./SidebarItem";
-import './Sidebar.css';
+import "./Sidebar.css";
 
 const Sidebar = () => {
-  return <div className="sidebar">
-    <SidebarItem description={"An item of Anonymous files #1"} selected={true}/>
-    <SidebarItem description={"An item of Anonymous files #2"}/>
-    <SidebarItem description={"An item of Anonymous files #3"}/>
-    <SidebarItem description={"An item of Anonymous files #4"}/>
-    <SidebarItem description={"An item of Anonymous files #5"}/>
-    <SidebarItem description={"An item of Anonymous files #6"}/>
-  </div>
-}
+  const [files, setFiles] = useContext(FileContext);
+  console.log(files);
+  useEffect(() => {
+    console.log(files);
+  })
+  return (
+    <div className="sidebar">
+      {files.map((file) => {
+        return <SidebarItem key={file._id} description={file.name} />;
+      })}
+    </div>
+  );
+};
 
 export default Sidebar;
