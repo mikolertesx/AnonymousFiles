@@ -1,5 +1,5 @@
 import { ipcRenderer } from "electron";
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrash, faFile } from "@fortawesome/free-solid-svg-icons";
@@ -35,10 +35,14 @@ const UploadedItem = ({ id }) => {
 
   const onEnterHandler = async (event) => {
     if (event.key === "Enter") {
-      saveElementName(event.target.value);
-      updateHandler(event.target.value);
-      setEditMode(false);
+      onBlurHandler(event);
     }
+  };
+
+  const onBlurHandler = async (event) => {
+    saveElementName(event.target.value);
+    updateHandler(event.target.value);
+    setEditMode(false);
   };
 
   const saveElementName = (name) => {
@@ -55,7 +59,14 @@ const UploadedItem = ({ id }) => {
 
   return (
     <div className="uploaded-item">
-      <div className="uploaded-item-thumbnail">
+      <div
+        className="uploaded-item-thumbnail"
+        onClick={() =>
+          ipcRenderer.invoke(Constants.file.openDownload, {
+            url: selectedFile.url,
+          })
+        }
+      >
         <FontAwesomeIcon icon={faFile} />
       </div>
       {editMode ? (
@@ -63,12 +74,13 @@ const UploadedItem = ({ id }) => {
           className="uploaded-item-name"
           defaultValue={selectedFile.name}
           onKeyDown={onEnterHandler}
-          ref={input => {
+          onBlur={onBlurHandler}
+          ref={(input) => {
             if (input) {
               input.focus();
               input.select();
             }
-          } }
+          }}
         />
       ) : (
         <p className="uploaded-item-name" onClick={() => setEditMode(true)}>

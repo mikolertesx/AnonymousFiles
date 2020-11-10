@@ -5,8 +5,8 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
+    "start": "cross-env NODE_ENV=development electron-forge start",
+    "package": "cross-env NODE_ENV=production electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
@@ -71,6 +71,7 @@
     "@electron-forge/plugin-webpack": "^6.0.0-beta.54",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^4.3.0",
     "electron": "10.1.5",
     "node-loader": "^1.0.2",
@@ -89,6 +90,7 @@
     "form-data": "^3.0.0",
     "nedb-promises": "^4.1.0",
     "node-fetch": "^2.6.1",
+    "opn": "^6.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }
