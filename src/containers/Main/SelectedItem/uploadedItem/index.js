@@ -1,12 +1,9 @@
-import { ipcRenderer } from "electron";
 import React, { useContext, useState } from "react";
-
+import Controllers from "../../../../controllers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faTrash, faFile } from "@fortawesome/free-solid-svg-icons";
-
 import { FileContext } from "../../../../context/filesContext";
 import { SelectedContext } from "../../../../context/selectedContext";
-import Constants from "../../../../shared/constants";
 import "./UploadedItem.css";
 
 const UploadedItem = ({ id }) => {
@@ -21,16 +18,13 @@ const UploadedItem = ({ id }) => {
   };
 
   const deletePathHandler = async () => {
-    await ipcRenderer.invoke(Constants.db.delete, id);
+    await Controllers.db.dbDelete(id);
     setFileIndex(null);
     refreshFiles();
   };
 
   const updateHandler = async (name) => {
-    await ipcRenderer.invoke(Constants.db.update, {
-      ...selectedFile,
-      name: name,
-    });
+    await Controllers.db.dbUpdate({ ...selectedFile, name: name });
   };
 
   const onEnterHandler = async (event) => {
@@ -47,7 +41,6 @@ const UploadedItem = ({ id }) => {
 
   const saveElementName = (name) => {
     const newFiles = [...files];
-    console.log(newFiles, id);
     const elementIndex = newFiles.findIndex((file) => file._id === id);
     if (elementIndex === null) {
       return;
@@ -61,11 +54,7 @@ const UploadedItem = ({ id }) => {
     <div className="uploaded-item">
       <div
         className="uploaded-item-thumbnail"
-        onClick={() =>
-          ipcRenderer.invoke(Constants.file.openDownload, {
-            url: selectedFile.url,
-          })
-        }
+        onClick={() => Controllers.file.fileUpload(selectedFile.url)}
       >
         <FontAwesomeIcon icon={faFile} />
       </div>

@@ -1,11 +1,8 @@
 import React, { useState, useContext } from "react";
-import Constants from "../../../../shared/constants";
-
+import FileController from "../../../../controllers/file";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
-
 import { FileContext } from "../../../../context/filesContext";
-import { ipcRenderer } from "electron";
 import "./UploadItem.css";
 
 const UploadItem = () => {
@@ -16,7 +13,7 @@ const UploadItem = () => {
 
   const selectFileHandler = async () => {
     setEnabled(false);
-    const message = await ipcRenderer.invoke(Constants.file.choose, null);
+    const message = await FileController.fileChoose();
     if (message !== null) {
       setFile(message[0]);
     }
@@ -26,9 +23,7 @@ const UploadItem = () => {
   const uploadFileHandler = async () => {
     setEnabled(false);
     setUploading(true);
-    const message = await ipcRenderer.invoke(Constants.file.upload, {
-      filePath: file,
-    });
+    const message = await FileController.fileUpload(file);
     if (message._id) {
       const newFiles = [...files, message];
       setFiles(newFiles);
