@@ -5,28 +5,33 @@ import { ipcRenderer } from "electron";
 
 const UploadItem = () => {
   const [files, setFiles] = useContext(FileContext);
+  const [enabled, setEnabled] = useState(true);
   const [file, setFile] = useState(null);
 
   const selectFileHandler = async () => {
+    setEnabled(false);
     const message = await ipcRenderer.invoke(Constants.file.choose, null);
     console.log(message[0]);
     if (message !== null) {
       setFile(message[0]);
     }
+    setEnabled(true);
   };
 
   const uploadFileHandler = async () => {
+    setEnabled(false);
     const message = await ipcRenderer.invoke(Constants.file.upload, { filePath: file });
     if (message._id) {
       const newFiles = [...files, message];
       setFiles(newFiles)
     }
+    setEnabled(true);
   };
 
   return (
     <div>
-      <button onClick={selectFileHandler}>Select File</button>
-      <button onClick={uploadFileHandler}>Upload File</button>
+      <button disabled={!enabled} onClick={selectFileHandler}>Select File</button>
+      { file && <button disabled={!enabled} onClick={uploadFileHandler}>Upload File</button>}
     </div>
   );
 };
