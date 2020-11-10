@@ -28,6 +28,16 @@ ipcMain.handle(database.get, async(_event, _args) => {
   return data;
 });
 
+ipcMain.handle(database.delete, async(_event, {id}) => {
+  const data = await db.remove(id);
+  return data;
+});
+
+ipcMain.handle(database.update, async(_event, model) => {
+  const data = await db.update({_id: model._id}, model);
+  return data;
+});
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -40,7 +50,7 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.setMenu(null);
+  false && mainWindow.setMenu(null);
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };

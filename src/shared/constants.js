@@ -4,6 +4,8 @@ export default {
     upload: 'upload-file'
   },
   db: {
-    get: 'get-db'
+    get: 'get-db',
+    update: 'update-db',
+    delete: 'delete-db',
   }
 }

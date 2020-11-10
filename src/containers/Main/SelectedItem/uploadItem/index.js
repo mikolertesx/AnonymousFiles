@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Constants from "../../../../shared/constants";
-import {FileContext} from "../../../../context/filesContext"
+import { FileContext } from "../../../../context/filesContext";
 import { ipcRenderer } from "electron";
 
 const UploadItem = () => {
@@ -11,7 +11,6 @@ const UploadItem = () => {
   const selectFileHandler = async () => {
     setEnabled(false);
     const message = await ipcRenderer.invoke(Constants.file.choose, null);
-    console.log(message[0]);
     if (message !== null) {
       setFile(message[0]);
     }
@@ -20,18 +19,27 @@ const UploadItem = () => {
 
   const uploadFileHandler = async () => {
     setEnabled(false);
-    const message = await ipcRenderer.invoke(Constants.file.upload, { filePath: file });
+    const message = await ipcRenderer.invoke(Constants.file.upload, {
+      filePath: file,
+    });
     if (message._id) {
       const newFiles = [...files, message];
-      setFiles(newFiles)
+      setFiles(newFiles);
     }
     setEnabled(true);
+    setFile(null);
   };
 
   return (
     <div>
-      <button disabled={!enabled} onClick={selectFileHandler}>Select File</button>
-      { file && <button disabled={!enabled} onClick={uploadFileHandler}>Upload File</button>}
+      <button disabled={!enabled} onClick={selectFileHandler}>
+        Select File
+      </button>
+      {file && (
+        <button disabled={!enabled} onClick={uploadFileHandler}>
+          Upload File
+        </button>
+      )}
     </div>
   );
 };

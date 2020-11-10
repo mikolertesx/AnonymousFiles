@@ -1,18 +1,24 @@
-import React, { useContext, useRef } from "react";
-import "./UploadedItem.css";
+import { ipcRenderer } from "electron";
+import React, { useContext } from "react";
 import { FileContext } from "../../../../context/filesContext";
+import { SelectedContext } from "../../../../context/selectedContext";
+import Constants from "../../../../shared/constants";
+import "./UploadedItem.css";
 
 const UploadedItem = ({ id }) => {
-  const [files] = useContext(FileContext);
+  const [files, , refreshFiles] = useContext(FileContext);
+  const [, setSelectedFile] = useContext(SelectedContext);
   const selectedFile = files.find((file) => file._id === id);
 
   const copyPathHandler = () => {
     navigator.clipboard.writeText(selectedFile.url);
   };
 
-  const deletePathHandler = () => {
-    // TODO
-  }
+  const deletePathHandler = async () => {
+    await ipcRenderer.invoke(Constants.db.delete, id);
+    setSelectedFile(null);
+    refreshFiles();
+  };
 
   return (
     <div className="uploaded-item">
