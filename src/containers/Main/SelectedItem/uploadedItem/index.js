@@ -54,7 +54,7 @@ const UploadedItem = ({ id }) => {
     <div className="uploaded-item">
       <div
         className="uploaded-item-thumbnail"
-        onClick={() => Controllers.file.fileUpload(selectedFile.url)}
+        onClick={() => Controllers.file.fileOpenDownload(selectedFile.url)}
       >
         <FontAwesomeIcon icon={faFile} />
       </div>
