@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, } from "react";
 import { FileContext } from "../../../context/filesContext";
 import SidebarItem from "./SidebarItem";
 import SidebarAddItem from "./SidebarAddItem";
 import "./Sidebar.css";
 
 const Sidebar = () => {
-  const [files, setFiles] = useContext(FileContext);
+  const [files] = useContext(FileContext);
   return (
     <div className="sidebar">
       <SidebarAddItem />

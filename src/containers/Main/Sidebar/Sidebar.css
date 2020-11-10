@@ -5,3 +5,9 @@
   background: white;
   overflow-y: auto;
 }
+
+@media(max-width: 800px) {
+  .sidebar {
+    flex: 0 0 20%;
+  }
+}

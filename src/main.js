@@ -45,12 +45,14 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    minWidth: 600,
+    minHeight: 600
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  false && mainWindow.setMenu(null);
+  true && mainWindow.setMenu(null);
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };

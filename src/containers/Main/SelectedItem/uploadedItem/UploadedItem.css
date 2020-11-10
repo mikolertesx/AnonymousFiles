@@ -6,11 +6,74 @@
   flex-direction: column;
 }
 
+.uploaded-item-thumbnail {
+  font-size: 6rem;
+  color: white;
+  margin-bottom: 12px;
+}
+
 .uploaded-item-name {
   font-size: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .uploaded-item-path {
   visibility: hidden;
   /* display: none; */
+}
+
+.uploaded-item-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 256px;
+}
+
+.uploaded-item-options button {
+  display: block;
+  border-radius: 0;
+  border: none;
+  width: 256px;
+  height: 256px;
+  cursor: pointer;
+  color: white;
+  font-size: 4rem;
+  transition: color 300ms, background 300ms, transform 600ms;
+  outline: none;
+}
+
+.uploaded-item-options button:active{
+  transform: scale(1.2);
+}
+
+.uploaded-item-options #delete-button {
+  background: red;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.uploaded-item-options #copy-button {
+  background: blue;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
+.uploaded-item-options #delete-button:hover {
+  color: red;
+  background: white;
+}
+
+.uploaded-item-options #copy-button:hover {
+  color: blue;
+  background: white;
+}
+
+@media(max-width: 800px) {
+  .uploaded-item-options button {
+    width: 128px;
+    height: 128px;
+    font-size: 2rem;
+  }
 }
