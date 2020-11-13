@@ -1,9 +1,9 @@
-const { ipcMain } = require("electron");
+const { ipcMain, dialog } = require("electron");
 const path = require("path");
 const opn = require("opn");
 const db = require("../db/database");
 const upload = require("../util/upload");
-const {db: database, file} = require("../shared/constants").default;
+const { db: database, file } = require("../shared/constants").default;
 
 ipcMain.handle(file.choose, async (_event, _args) => {
   const files = await dialog.showOpenDialog();

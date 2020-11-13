@@ -3,6 +3,7 @@ import FileController from "../../../../controllers/file";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload, faCloudUploadAlt } from "@fortawesome/free-solid-svg-icons";
 import { FileContext } from "../../../../context/filesContext";
+import DragHandlerDiv from "../../../../hoc/dragHandlerDiv";
 import "./UploadItem.css";
 
 const UploadItem = () => {
@@ -11,12 +12,24 @@ const UploadItem = () => {
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState(null);
 
+  // Support drag and drop and clean the effects.
+
   const selectFileHandler = async () => {
     setEnabled(false);
     const message = await FileController.fileChoose();
     if (message !== null) {
       setFile(message[0]);
     }
+    setEnabled(true);
+  };
+
+  const onDragFileHandler = (e) => {
+    const draggedFile = e.dataTransfer.files[0].path;
+    const isFile = draggedFile.split(".").length > 1;
+    if (!isFile) {
+      return;
+    }
+    setFile(draggedFile);
     setEnabled(true);
   };
 
@@ -33,8 +46,15 @@ const UploadItem = () => {
     setUploading(false);
   };
 
+  let fileName = "";
+
+  if (file) {
+    const splitFile = file ? file.split("\\") : null;
+    fileName = splitFile ? splitFile[splitFile.length - 1] : null;
+  }
+
   return (
-    <div className="upload-item">
+    <DragHandlerDiv className="upload-item" dragHandler={onDragFileHandler}>
       <div className="upload-buttons">
         <button
           disabled={!enabled}
@@ -53,8 +73,9 @@ const UploadItem = () => {
           </button>
         )}
       </div>
+      {!uploading && file && <p>File: {fileName}</p>}
       {uploading && <p>Uploading file...</p>}
-    </div>
+    </DragHandlerDiv>
   );
 };
 
